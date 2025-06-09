@@ -1,6 +1,11 @@
 version: "3"
 services:
-  user: "${UID}:${GID}"
   app:
     build: .
+    privileged: true
+    user: "${UID}:${GID}"
     tty: true
+    ports:
+      - "2222:22"
+    volumes:
+      - /home/pudding/ramdisk/:/root/ftp
