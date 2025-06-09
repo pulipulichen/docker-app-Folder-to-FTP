@@ -16,4 +16,4 @@ services:
       FTP_USER_HOME: /home/ftpusers/user
       ADDED_FLAGS: "-d -E -j -X -P 127.0.0.1 -p 30000:30009"
     volumes:
-      - __INPUT_:/home/ftpusers/user
+      - __INPUT__:/home/ftpusers/user
