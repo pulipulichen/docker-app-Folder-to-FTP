@@ -1,16 +1,19 @@
-version: "3"
 services:
-  app:
-    image: pudding/docker-app:docker-app-Folder-to-FTP-20240712.145238
-    tty: true
-    user: "${UID}:${GID}"
-    command: node /app/index.js "/input/__INPUT__"
+  ftp:
+    build:
+      context: .
+      args:
+        HOST_UID: ${UID}
+        HOST_GID: ${GID}
+    container_name: ftp-server
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
     environment:
-      - CONTAINER_NAME=docker-app-folder-to-ftp-app
-      - LOCAL_VOLUMN_PATH=/input/
-      - RUN_COMMAND=node /app/index.js
-    volumes: 
-      - ./app:/app/
-      - ./cache:/cache/
-      - __SOURCE__:/input/
-      - __SOURCE__:/output/
+      PUBLICHOST: 127.0.0.1           # ← 改成你的內網或外網 IP
+      FTP_USER_NAME: user
+      FTP_USER_PASS: password
+      FTP_USER_HOME: /home/ftpusers/user
+      ADDED_FLAGS: "-d -E -j -X -P 127.0.0.1 -p 30000:30009"
+    volumes:
+      - __INPUT_:/home/ftpusers/user
